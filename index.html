@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			h1{
+				text-align: center;
+			}
+			.alert{
+				width: 500px;
+				height: 300px;
+				position: fixed;
+				left: 50%;
+				top: 50%;
+				margin-left: -250px;
+				margin-top: -150px;
+				background: orangered;
+				color: #fff;
+				text-align: center;
+				border-radius: 20px;
+			}
+		</style>
+	</head>
+	<body>
+		<h1></h1>
+		<div id="djs">
+			还剩：10s
+		</div>
+		<script type="text/javascript">
+			var count = 0;
+			
+			var time = 10
+			
+			//可以随机生成26个字母到h1标签
+			function createMathChar(){
+				//随机生成1单词，26个字母里的一个
+				var num = parseInt(Math.random()*26+97)  //Math.random()生成[0-1)的随机值,parseInt实现向下取整数
+				//将随机值生成字母
+				var mathStr = String.fromCharCode(num)
+				//将字母放入h1标签
+				var h1 = document.querySelector('h1')
+				h1.innerHTML = mathStr
+			}
+			
+			createMathChar()
+			
+			
+			var body = document.body;
+			body.onkeypress = function(event){
+				var h1 = document.querySelector('h1')
+				if (event.key == h1.innerHTML){
+					count ++;
+					console.log(count)
+					createMathChar()
+				}
+			}
+			
+			
+			//间隔函数
+			var interTime = setInterval(function(){
+				time --
+				var djs = document.querySelector('#djs')
+				djs.innerHTML = "还剩："+time+"s";
+				if(time==0){
+					clearInterval(interTime)
+					/*alert("您每分钟打字速度为"+count*6+"字！")*/
+					var d1 = document.createElement('div')
+					d1.className = "alert"
+					d1.innerHTML = "<h1>您每分钟打字速度为"+count*6+"字！</h1>"
+					document.body.appendChild(d1)
+					body.onkeypress = null;
+				}
+			},1000)
+			
+			
+			
+			
+			
+		</script>
+	</body>
+</html>
